@@ -1,10 +1,13 @@
 #include<iostream>
-
+#include "Menu.h"
+#include "SettingUp.h"
 using namespace std;
 
 int main() {
-	cout << "Hello, world" << endl;
-
+	ShowConsoleCursor(false);
+	FixConsoleWindow();
+	Routes();
+	
 	system("pause");
 	return 0;
 }
