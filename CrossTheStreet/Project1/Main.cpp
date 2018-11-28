@@ -7,6 +7,8 @@ int main() {
 	ShowConsoleCursor(false);
 	FixConsoleWindow();
 	Routes();
+
+	cout << "Hello";
 	
 	system("pause");
 	return 0;
