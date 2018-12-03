@@ -115,15 +115,21 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="CANIMAL.cpp" />
     <ClCompile Include="CGAME.cpp" />
     <ClCompile Include="console.cpp" />
+    <ClCompile Include="CPEOPLE.cpp" />
+    <ClCompile Include="CVEHICLE.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="Menu.cpp" />
     <ClCompile Include="SettingUp.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="CANIMAL.h" />
     <ClInclude Include="CGAME.h" />
     <ClInclude Include="console.h" />
+    <ClInclude Include="CPEOPLE.h" />
+    <ClInclude Include="CVEHICLE.h" />
     <ClInclude Include="Menu.h" />
     <ClInclude Include="SettingUp.h" />
   </ItemGroup>

@@ -1,52 +1,129 @@
 #include "CGAME.h"
+#include "CPEOPLE.h"
 #include "Menu.h"
 #include "console.h"
 #include "SettingUp.h"
-#include <iostream>
-using namespace std;
+
+void border() {
+	gotoXY(29, 4); cout << "Score: 0";
+	gotoXY(40, 4); cout << "Level: 1";
+	gotoXY(29, 5); 
+	for (int i = 0; i < 64; i++) {
+		TextColor(15);
+		cout << char(220);
+	}
+	gotoXY(29, 27);
+	for (int i = 0; i < 64; i++) {
+		TextColor(15);
+		cout << char(223);
+	}
+	for (int i = 6; i < 27; i++) {
+		gotoXY(29, i); cout << char(219);
+	}
+	for (int i = 6; i < 27; i++) {
+		gotoXY(92, i); cout << char(219);
+	}
+}
 
 void controlPeople() {
-	char people = 'Y';
-	int columns, rows;
+	int minX = 30,
+		maxX = 91,
+		minY = 6,
+		maxY = 26;
 
-	GetConsoleSize(columns, rows);
-
-	int x = 0, y = 0;
+	int x, y;
+	CPEOPLE man;
 	while (1) {
-		clrscr();
-		gotoXY(x, y);
-		cout << people;
+		x = man.getX(), y = man.getY();
+
+		mu.lock();
+		gotoXY(x, y); cout << "Y";
+		mu.unlock();
 
 		//Kiem tra key nhap vao
 		int z = _getch();
 		State stat = key(z);
 		switch (stat) {
 		case UP:
-			if (y == 0)
-				y = 0;
-			else
-				y -= 1;
+			if (y > minY)
+				man.UP();
 			break;
 		case DOWN:
-			if (y == rows)
-				y = rows;
-			else
-				y += 1;
+			if (y < maxY)
+				man.DOWN();
 			break;
 		case RIGHT:
-			if (x == columns)
-				x = columns;
-			else
-				x += 1;
+			if (x < maxX)
+				man.RIGHT();
 			break;
 		case LEFT:
-			if (x == 0)
-				x = 0;
-			else
-				x -= 1;
+			if (x > minX)
+				man.LEFT();
 			break;
 		case ENTER:
 			return;
 		}
+		mu.lock();
+		gotoXY(x, y); cout << " ";
+		mu.unlock();
 	}
+}
+
+CGAME::CGAME() {
+
+}
+
+CGAME::~CGAME() {
+	delete[] axt;
+	delete[] ach;
+	delete[] akl;
+	//delete[] ac;
+	delete[] cn;
+}
+
+void CGAME::drawGame() {
+	border();
+	thread bird(runMultiBird, ac);
+	thread dino(runMultiDino);
+	thread car(runMultiCar);
+	thread truck(runMultiTruck);
+	controlPeople();
+
+	bird.join();
+	dino.join();
+	car.join();
+	truck.join();
+}
+
+CPEOPLE CGAME::getPeople() {
+	return CPEOPLE();
+}
+
+CVEHICLE CGAME::getVehicle() {
+	return CVEHICLE();
+}
+
+CANIMAL CGAME::getAnimal() {
+	return CANIMAL();
+}
+
+void CGAME::resetGame() {
+}
+
+void CGAME::exitGame() {
+}
+
+void CGAME::startGame() {
+}
+
+void CGAME::saveGame() {
+}
+
+void CGAME::updatePosPeople(char) {
+}
+
+void CGAME::updatePosVehicle() {
+}
+
+void CGAME::updatePosAnimal() {
 }

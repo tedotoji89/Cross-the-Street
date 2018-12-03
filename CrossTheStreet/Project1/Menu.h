@@ -1,7 +1,4 @@
 #pragma once
-#ifndef _MENU_H_
-#define _MENU_H_
-
 #include <conio.h>
 
 typedef const char str[31];
@@ -15,4 +12,3 @@ State key(int z);
 int Menu(str step[], int n);
 void Routes();
 
-#endif // !_MENU_H_

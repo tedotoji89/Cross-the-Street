@@ -1,28 +1,25 @@
 #include "Menu.h"
-#include "console.h"
 #include "CGAME.h"
-#include <iostream>
-using namespace std;
+#include "console.h"
 
 #define BACKGROUND_COLOR 176
 #define FONT_COLOR 15
 
 //Kiem tra key nhap vao
 State key(int z) {
-	if (z == 224) {
-		char c;
-		c = _getch();
-		if (c == 72)
-			return UP;              //Ma ASCII:
-		if (c == 80)				//ENTER: 13
-			return DOWN;			//UP: 224 & 72
-		if (c == 77)				//DOWN: 224 & 80
-			return RIGHT;
-		if (c == 75)
-			return LEFT;
-	}
-	else if (z == 13) {
+	switch (z) {
+	case 119:
+		return UP;
+	case 97: 
+		return LEFT;
+	case 115:
+		return DOWN;
+	case 100:
+		return RIGHT;
+	case 13:
 		return ENTER;
+	default:
+		break;
 	}
 }
 
