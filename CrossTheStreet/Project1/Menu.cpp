@@ -6,8 +6,10 @@
 #define FONT_COLOR 15
 
 //Kiem tra key nhap vao
-State key(int z) {
-	switch (z) {
+State key(int z) 
+{
+	switch (z) 
+	{
 	case 119:
 		return UP;
 	case 97: 
@@ -23,25 +25,28 @@ State key(int z) {
 	}
 }
 
-int Menu(str step[], int n) {
+int Menu(str step[], int n) 
+{
 	int st = 0; //Chi ra step hien tai. Mac dinh la step 1
 	int *color = new int[n];
 
 	//Chinh mau cho cac selection
-	for (int i = 0; i < n; i++) {
+	for (int i = 0; i < n; i++) 
 		color[i] = FONT_COLOR;
-	}
+	
 	color[0] = BACKGROUND_COLOR;
 
 	//Su dung 1 vong lap vo han cho toi khi tra ve mot gia tri
-	while (1) {
+	while (1) 
+	{
 		clrscr();
 		
 		TextColor(7);
 		cout << "Welcome, Friend!!" << endl << endl;
 
 		//In cac selection ra man hinh
-		for (int i = 0; i < n; i++) {
+		for (int i = 0; i < n; i++) 
+		{
 			TextColor(color[i]);
 			cout << i + 1 << "> " << step[i] << endl;
 		}
@@ -49,7 +54,8 @@ int Menu(str step[], int n) {
 		//Kiem tra key nhap vao
 		int z = _getch();
 		State stat = key(z);
-		switch (stat) {
+		switch (stat) 
+		{
 		case UP:
 			if (st == 0) {
 				st = n - 1;
@@ -65,17 +71,19 @@ int Menu(str step[], int n) {
 			return st;
 		}
 		//In mau phu hop voi step hien tai
-		for (int i = 0; i < n; i++) {
+		for (int i = 0; i < n; i++) 
 			color[i] = FONT_COLOR;
-		}
+		
 		color[st] = BACKGROUND_COLOR;
 	}
 }
 
-void Routes() {
+void Routes() 
+{
 	//Dieu huong sau khi chon
 	int selection = Menu(step, 4);
-	switch (selection) {
+	switch (selection) 
+	{
 	case 0:
 		controlPeople();
 		break;
