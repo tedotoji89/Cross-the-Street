@@ -7,8 +7,8 @@ CGAME cg;
 char MOVING;
 int maxBird = 6, 
 	maxDino = 6,
-	maxCar = 5, 
-	maxTruck = 5;
+	maxCar = 6, 
+	maxTruck = 6;
 int minX = 30,
 	minY = 6,
 	maxX = 91,
@@ -28,10 +28,11 @@ void subThread()
 		cg.updatePosAnimal();
 		cg.updatePosVehicle();
 		cg.drawGame();
-		Sleep(100);
+		Sleep(10);
 		cg.clrScr();
 		if (cg.getPeople().isImpactVehi(cg.getVehicle()) || cg.getPeople().isImpactAni(cg.getAnimal())) {
-			cg.setDead();
+			//cg.setDead();
+			cout << "Haha";
 		}
 		if (cg.getPeople().isFinish()) {
 
@@ -69,13 +70,11 @@ int main()
 		else {
 			if (temp == 'Y') cg.startGame();
 			else {
-				cout << "game over";
 				cg.exitGame(t1.native_handle());
 				return 0;
 			}
 		}
 	}
 
-	//system("pause");
 	return 0;
 }

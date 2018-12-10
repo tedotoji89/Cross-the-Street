@@ -8,6 +8,8 @@ public:
 	CVEHICLE() = default;
 	int getX() { return mX; }
 	int getY() { return mY; }
+	void setX(int x) { mX = x; }
+	void setY(int y) { mY = y; }
 
 	virtual void render();
 	virtual void clr();
@@ -30,6 +32,3 @@ public:
 	void move();
 	void clr();
 };
-
-void runMultiCar();
-void runMultiTruck();

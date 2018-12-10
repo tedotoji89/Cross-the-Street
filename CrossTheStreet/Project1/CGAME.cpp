@@ -91,7 +91,15 @@ void CGAME::drawGame()
 	for (int i = 0; i < maxBird; i++) {
 		ac[i].Draw();
 	}
-	akl->Draw();
+	for (int i = 0; i < maxDino; i++) {
+		akl[i].Draw();
+	}
+	for (int i = 0; i < maxCar; i++) {
+		ach[i].render();
+	}
+	for (int i = 0; i < maxCar; i++) {
+		axt[i].render();
+	}
 }
 
 CPEOPLE CGAME::getPeople() {
@@ -121,7 +129,16 @@ void CGAME::exitGame(void*) {
 void CGAME::startGame() 
 {
 	for (int i = 0; i < maxBird; i++) {
-		ac[i].setX(30 + 10*i);
+		ac[i].setX(33 + 10*i);
+	}
+	for (int i = 0; i < maxDino; i++) {
+		akl[i].setX(30 + 10 * i);
+	}
+	for (int i = 0; i < maxCar; i++) {
+		ach[i].setX(32 + 10*i);
+	}
+	for (int i = 0; i < maxCar; i++) {
+		axt[i].setX(34 + 10*i);
 	}
 }
 
@@ -148,7 +165,15 @@ void CGAME::clrScr() {
 	for (int i = 0; i < maxBird; i++) {
 		ac[i].clr();
 	}
-	akl->clr();
+	for (int i = 0; i < maxDino; i++) {
+		akl[i].clr();
+	}
+	for (int i = 0; i < maxCar; i++) {
+		ach[i].clr();
+	}
+	for (int i = 0; i < maxCar; i++) {
+		axt[i].clr();
+	}
 }
 
 void CGAME::updatePosPeople(int z)
@@ -190,13 +215,19 @@ void CGAME::updatePosPeople(int z)
 }
 
 void CGAME::updatePosVehicle() {
-	ach->move();
-	axt->move();
+	for (int i = 0; i < maxCar; i++) {
+		ach[i].move();
+	}
+	for (int i = 0; i < maxCar; i++) {
+		axt[i].move();
+	}
 }
 
 void CGAME::updatePosAnimal() {
 	for (int i = 0; i < maxBird; i++) {
 		ac[i].move();
 	}
-	akl->move();
+	for (int i = 0; i < maxDino; i++) {
+		akl[i].move();
+	}
 }

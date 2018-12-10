@@ -4,57 +4,6 @@
 
 mutex mu;
 
-void run1Bird(int speed, CBIRD bird)
-{
-	for (int i = 0; i < 60; i++) {
-		bird.Draw();
-		Sleep(speed);
-		bird.clr();
-		bird.move();
-	}
-}
-
-void runMultiBird(CBIRD *bird)
-{
-	while (true)
-	{
-		for (int i = 0; i < 60; i++) {
-			bird->Draw();
-			Sleep(100);
-			bird->clr();
-			bird->move();
-		}
-		bird++;
-		//thread run(run1Bird, 100, bird);
-		//Sleep(1000);
-		//run.detach();
-	}
-}
-
-void run1Dino(int speed)
-{
-	CDINOSAUR dino;
-
-	for (int i = 0; i < 60; i++) {
-		dino.Draw();
-		Sleep(speed);
-		dino.clr();
-		dino.move();
-	}
-}
-
-void runMultiDino()
-{
-	while (true)
-	{
-		thread run(run1Dino, 200);
-		Sleep(3000);
-		run.detach();
-	}
-}
-
-//---------------
-
 void initBird(vector<string>& birdWav)
 {
 	std::string birdWav0 = "Harbor-seagulls.wav",
@@ -82,7 +31,9 @@ void initDino(vector<string>& dinoWav)
 //---------------
 
 void CANIMAL::Draw() { TextColor(14); }
+
 void CANIMAL::Tell(vector<string>&) { }
+
 void CANIMAL::move() { 
 	if (mX < 88) {
 		mX++;
@@ -91,6 +42,7 @@ void CANIMAL::move() {
 		mX = 30;
 	}
 }
+
 void CANIMAL::clr() { TextColor(7); }
 
 //---------------

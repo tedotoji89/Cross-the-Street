@@ -2,42 +2,6 @@
 #include "CGAME.h"
 #include "console.h"
 
-void run1Car(int speed) {
-	CCAR car;
-	for (int i = 0; i < 60; i++) {
-		car.render();
-		Sleep(speed);
-		car.clr();
-		car.move();
-	}
-}
-
-void runMultiCar() {
-	while (true) {
-		thread run(run1Car, 80);
-		Sleep(1000);
-		run.detach();
-	}
-}
-void run1Truck(int speed) {
-	CTRUCK truck;
-	for (int i = 0; i < 60; i++) {
-		truck.render();
-		Sleep(speed);
-		truck.clr();
-		truck.move();
-	}
-}
-
-void runMultiTruck() {
-	while (true) {
-		thread run(run1Truck, 100);
-		Sleep(1000);
-		run.detach();
-	}
-}
-
-
 void CVEHICLE::render() {
 	TextColor(14);
 }
@@ -47,7 +11,12 @@ void CVEHICLE::clr() {
 }
 
 void CVEHICLE::move() {
-	mX++;
+	if (mX < 88) {
+		mX++;
+	}
+	else {
+		mX = 30;
+	}
 }
 
 CCAR::CCAR() {
