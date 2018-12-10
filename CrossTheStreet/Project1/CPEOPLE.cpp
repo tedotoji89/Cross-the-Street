@@ -22,7 +22,7 @@ void CPEOPLE::RIGHT() { mX += 1; }
 
 void CPEOPLE::DOWN() { mY += 1; }
 
-bool CPEOPLE::isImpact(CANIMAL *obt) { 
+bool CPEOPLE::isImpactAni(CANIMAL *obt) { 
 	for (int i = 0; i < maxBird; i++) {
 		if (mX == obt->getX() && mY == obt->getY()) {
 			return true;
@@ -32,7 +32,7 @@ bool CPEOPLE::isImpact(CANIMAL *obt) {
 	return false; 
 }
 
-bool CPEOPLE::isImpact(CVEHICLE *obt) { 
+bool CPEOPLE::isImpactVehi(CVEHICLE *obt) { 
 	for (int i = 0; i < maxBird; i++) {
 		if (mX == obt->getX() && mY == obt->getY()) {
 			return true;

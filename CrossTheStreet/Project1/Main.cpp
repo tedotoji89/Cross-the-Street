@@ -6,7 +6,7 @@
 CGAME cg;
 char MOVING;
 int maxBird = 6, 
-	maxDino = 5,
+	maxDino = 6,
 	maxCar = 5, 
 	maxTruck = 5;
 int minX = 30,
@@ -30,7 +30,7 @@ void subThread()
 		cg.drawGame();
 		Sleep(100);
 		cg.clrScr();
-		if (cg.getPeople().isImpact(cg.getVehicle()) || cg.getPeople().isImpact(cg.getAnimal())) {
+		if (cg.getPeople().isImpactVehi(cg.getVehicle()) || cg.getPeople().isImpactAni(cg.getAnimal())) {
 			cg.setDead();
 		}
 		if (cg.getPeople().isFinish()) {

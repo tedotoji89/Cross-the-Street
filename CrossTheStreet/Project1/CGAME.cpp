@@ -98,8 +98,8 @@ CPEOPLE CGAME::getPeople() {
 	return *cn;
 }
 
-CVEHICLE CGAME::getVehicle() {
-	return *this->ach;
+CVEHICLE* CGAME::getVehicle() {
+	return this->ach;
 }
 
 CANIMAL* CGAME::getAnimal() {
@@ -115,7 +115,7 @@ void CGAME::resetGame() {
 }
 
 void CGAME::exitGame(void*) {
-	Routes();
+	//Routes();
 }
 
 void CGAME::startGame() 

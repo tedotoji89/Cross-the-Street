@@ -35,7 +35,7 @@ public:
 	void drawGame();
 
 	CPEOPLE getPeople();
-	CVEHICLE getVehicle();
+	CVEHICLE* getVehicle();
 	CANIMAL* getAnimal();
 	
 	void setDead();

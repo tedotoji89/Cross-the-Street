@@ -21,8 +21,8 @@ public:
 	void RIGHT();
 	void DOWN();
 
-	bool isImpact(CANIMAL*);
-	bool isImpact(CVEHICLE*);
+	bool isImpactAni(CANIMAL*);
+	bool isImpactVehi(CVEHICLE*);
 	bool isFinish();
 	bool isDead();
 
