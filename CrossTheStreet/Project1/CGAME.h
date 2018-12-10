@@ -11,14 +11,22 @@ const string path = "D:\\Final Project\\Year 2 - Semester 1\\Sound\\";
 
 extern string savePath;
 extern mutex mu;
+extern int maxBird;
+extern int maxDino;
+extern int maxCar;
+extern int maxTruck;
+extern int maxX;
+extern int maxY;
+extern int minX;
+extern int minY;
 
 class CGAME 
 {
 private:
 	CTRUCK* axt;
 	CCAR* ach;
-	CDINOSAUR akl;
-	CBIRD ac;
+	CDINOSAUR* akl;
+	CBIRD* ac;
 	CPEOPLE* cn;
 
 public:
@@ -28,14 +36,16 @@ public:
 
 	CPEOPLE getPeople();
 	CVEHICLE getVehicle();
-	CANIMAL getAnimal();
+	CANIMAL* getAnimal();
 	
+	void setDead();
 	void resetGame();
-	void exitGame();
+	void exitGame(void*);
 	void startGame();
 	void saveGame();
-	//void pauseGame(HANDLE);
-	//void resumeGame(HANDLE);
+	void pauseGame(void*);
+	void resumeGame(void*);
+	void clrScr();
 	
 	void updatePosPeople(int);
 	void updatePosVehicle();

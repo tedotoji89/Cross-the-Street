@@ -3,6 +3,7 @@
 #include <vector>
 #include <SFML/Audio.hpp>
 #include <time.h>
+#include <vector>
 
 class Point
 {
@@ -18,6 +19,7 @@ protected:
 	int mX, mY;
 	int level;
 	int random;
+	//vector <CANIMAL*> a;
 
 	Point topLeft, bottomRight;
 
@@ -29,6 +31,8 @@ public:
 
 	int getX() { return mX; }
 	int getY() { return mY; }
+	void setX(int x) { mX = x; }
+	void setY(int y) { mY = y; }
 
 	virtual void Draw();
 	virtual void Tell(std::vector<std::string>&);
@@ -61,5 +65,5 @@ public:
 void initBird(std::vector<std::string>& birdWav);
 void initDino(std::vector<std::string>& dinoWav);
 
-void runMultiBird(CBIRD);
+void runMultiBird(CBIRD *);
 void runMultiDino();

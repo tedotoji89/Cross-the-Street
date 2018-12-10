@@ -14,13 +14,20 @@ void run1Bird(int speed, CBIRD bird)
 	}
 }
 
-void runMultiBird(CBIRD bird)
+void runMultiBird(CBIRD *bird)
 {
 	while (true)
 	{
-		thread run(run1Bird, 100, bird);
-		Sleep(1000);
-		run.detach();
+		for (int i = 0; i < 60; i++) {
+			bird->Draw();
+			Sleep(100);
+			bird->clr();
+			bird->move();
+		}
+		bird++;
+		//thread run(run1Bird, 100, bird);
+		//Sleep(1000);
+		//run.detach();
 	}
 }
 
@@ -76,7 +83,14 @@ void initDino(vector<string>& dinoWav)
 
 void CANIMAL::Draw() { TextColor(14); }
 void CANIMAL::Tell(vector<string>&) { }
-void CANIMAL::move() { mX++; }
+void CANIMAL::move() { 
+	if (mX < 88) {
+		mX++;
+	}
+	else {
+		mX = 30;
+	}
+}
 void CANIMAL::clr() { TextColor(7); }
 
 //---------------

@@ -5,6 +5,10 @@ protected:
 	int mX, mY;
 	int level;
 public:
+	CVEHICLE() = default;
+	int getX() { return mX; }
+	int getY() { return mY; }
+
 	virtual void render();
 	virtual void clr();
 	virtual void move();

@@ -2,7 +2,7 @@
 #include "CPEOPLE.h"
 #include "Menu.h"
 #include "console.h"
-#include "SettingUp.h"
+#include "SetUp.h"
 
 void border() 
 {
@@ -69,6 +69,10 @@ void controlPeople() { }
 
 CGAME::CGAME() 
 {
+	ac = new CBIRD[maxBird];
+	akl = new CDINOSAUR[maxDino];
+	ach = new CCAR[maxBird];
+	axt = new CTRUCK[maxTruck];
 	cn = new CPEOPLE();
 }
 
@@ -76,72 +80,48 @@ CGAME::~CGAME()
 {
 	delete[] axt;
 	delete[] ach;
-	//delete[] akl;
-	//delete[] ac;
+	delete[] akl;
+	delete[] ac;
 	delete[] cn;
 }
 
 void CGAME::drawGame() 
 {
 	border();
-
-	thread bird(runMultiBird, ac);
-	thread dino(runMultiDino);
-	thread car(runMultiCar);
-	thread truck(runMultiTruck);
-
-	startGame();
-
-	bird.join();
-	dino.join();
-	car.join();
-	truck.join();
+	for (int i = 0; i < maxBird; i++) {
+		ac[i].Draw();
+	}
+	akl->Draw();
 }
 
 CPEOPLE CGAME::getPeople() {
-	return CPEOPLE();
+	return *cn;
 }
 
 CVEHICLE CGAME::getVehicle() {
-	return CVEHICLE();
+	return *this->ach;
 }
 
-CANIMAL CGAME::getAnimal() {
-	return CANIMAL();
+CANIMAL* CGAME::getAnimal() {
+	return this->ac;
+}
+
+void CGAME::setDead() {
+	cn->setState(false);
 }
 
 void CGAME::resetGame() {
 	return;
 }
 
-void CGAME::exitGame() {
+void CGAME::exitGame(void*) {
+	Routes();
 }
 
 void CGAME::startGame() 
 {
-	while (1)
-	{
-		int z = _getch();
-		switch (z)
-		{
-		case 97: case 100: case 115: case 119: case 65: case 68: case 83: case 87:
-			updatePosPeople(z);
-			break;
-
-		case 80: case 112:
-			break;
-
-		case 84: case 116:
-			resetGame();
-			break;
-
-		case 76: case 108:
-			saveGame();
-			break;
-
-		//default:
-		}
-
+	for (int i = 0; i < maxBird; i++) {
+		ac[i].setX(30 + 10*i);
 	}
 }
 
@@ -156,13 +136,23 @@ void CGAME::saveGame()
 	return;
 }
 
+void CGAME::pauseGame(void*)
+{
+}
+
+void CGAME::resumeGame(void*)
+{
+}
+
+void CGAME::clrScr() {
+	for (int i = 0; i < maxBird; i++) {
+		ac[i].clr();
+	}
+	akl->clr();
+}
+
 void CGAME::updatePosPeople(int z)
 {
-	int minX = 30,
-		maxX = 91,
-		minY = 6,
-		maxY = 26;
-
 	int x, y;
 
 	x = cn->getX(), y = cn->getY();
@@ -200,7 +190,13 @@ void CGAME::updatePosPeople(int z)
 }
 
 void CGAME::updatePosVehicle() {
+	ach->move();
+	axt->move();
 }
 
 void CGAME::updatePosAnimal() {
+	for (int i = 0; i < maxBird; i++) {
+		ac[i].move();
+	}
+	akl->move();
 }

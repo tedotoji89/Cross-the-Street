@@ -1,4 +1,4 @@
-#include "SettingUp.h"
+#include "SetUp.h"
 
 void FixConsoleWindow() 
 {

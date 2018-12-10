@@ -10,13 +10,13 @@ State key(int z)
 {
 	switch (z) 
 	{
-	case 119:
+	case 119: case 87:
 		return UP;
-	case 97: 
+	case 97: case 65:
 		return LEFT;
-	case 115:
+	case 115: case 83:
 		return DOWN;
-	case 100:
+	case 100: case 68:
 		return RIGHT;
 	case 13:
 		return ENTER;
