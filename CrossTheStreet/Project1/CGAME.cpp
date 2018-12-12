@@ -4,8 +4,12 @@
 #include "console.h"
 #include "SetUp.h"
 
+extern CGAME cg;
+char MOVING;
+
 void border() 
 {
+	mu.lock();
 	gotoXY(97, 7); cout << "Score: 0";
 	gotoXY(97, 8); cout << "Level: 1";
 
@@ -62,16 +66,49 @@ void border()
 	for (int i = 6; i < 27; i++) {
 		gotoXY(113, i); cout << char(219);
 	}
-
+	mu.unlock();
 }
 
-void controlPeople() { }
+void subThread()
+{
+	//	thread bird(runMultiBird, cg.getAnimal());
+	//	bird.detach();
+
+	while (true)
+	{
+		if (!cg.getPeople().isDead())
+		{
+			cg.updatePosPeople(MOVING);
+		}
+		MOVING = ' ';
+
+		cg.updatePosAnimal();
+		cg.updatePosVehicle();
+
+		cg.drawGame();
+		Sleep(30);
+		cg.clrScr();
+
+		if (cg.getPeople().isImpactVehi(cg.getVehicle()) || cg.getPeople().isImpactAni(cg.getAnimal())) {
+			//cg.setDead();
+			cout << "Haha";
+			return;
+		}
+		if (cg.getPeople().isFinish()) {
+			cout << "Finish.";
+			return;
+		}
+
+	}
+}
+
+//--------------------------
 
 CGAME::CGAME() 
 {
 	ac = new CBIRD[maxBird];
 	akl = new CDINOSAUR[maxDino];
-	ach = new CCAR[maxBird];
+	ach = new CCAR[maxCar];
 	axt = new CTRUCK[maxTruck];
 	cn = new CPEOPLE();
 }
@@ -88,30 +125,32 @@ CGAME::~CGAME()
 void CGAME::drawGame() 
 {
 	border();
+
 	for (int i = 0; i < maxBird; i++) {
 		ac[i].Draw();
-	}
-	for (int i = 0; i < maxDino; i++) {
 		akl[i].Draw();
-	}
-	for (int i = 0; i < maxCar; i++) {
 		ach[i].render();
-	}
-	for (int i = 0; i < maxCar; i++) {
 		axt[i].render();
 	}
 }
+
 
 CPEOPLE CGAME::getPeople() {
 	return *cn;
 }
 
 CVEHICLE* CGAME::getVehicle() {
-	return this->ach;
+	//return this->ach;
+	if (cn->getY() > 17)
+		return this->ach;
+	return this->axt;
 }
 
 CANIMAL* CGAME::getAnimal() {
-	return this->ac;
+	//return this->ac;
+	if (cn->getY() < 11)
+		return this->ac;
+	return this->akl;
 }
 
 void CGAME::setDead() {
@@ -123,22 +162,50 @@ void CGAME::resetGame() {
 }
 
 void CGAME::exitGame(void*) {
-	//Routes();
+	clrscr();
+	Routes();
 }
 
 void CGAME::startGame() 
 {
+	drawGame();
+
 	for (int i = 0; i < maxBird; i++) {
 		ac[i].setX(33 + 10*i);
-	}
-	for (int i = 0; i < maxDino; i++) {
 		akl[i].setX(30 + 10 * i);
-	}
-	for (int i = 0; i < maxCar; i++) {
 		ach[i].setX(32 + 10*i);
-	}
-	for (int i = 0; i < maxCar; i++) {
 		axt[i].setX(34 + 10*i);
+	}
+
+	int temp;
+
+	thread t1(subThread);
+
+	//	thread bird(runMultiBird, cg.getAnimal());
+//	cg.startGame();
+
+	while (1) {
+		temp = toupper(_getch());
+		if (!cg.getPeople().isDead()) {
+			if (temp == 27) {
+				cg.exitGame(t1.native_handle());
+				return;
+			}
+			else if (temp == 'P') {
+				cg.pauseGame(t1.native_handle());
+			}
+			else {
+				cg.resumeGame((HANDLE)t1.native_handle());
+				MOVING = temp;
+			}
+		}
+		else {
+			if (temp == 'Y') cg.startGame();
+			else {
+				cg.exitGame(t1.native_handle());
+				return;
+			}
+		}
 	}
 }
 
@@ -164,14 +231,8 @@ void CGAME::resumeGame(void*)
 void CGAME::clrScr() {
 	for (int i = 0; i < maxBird; i++) {
 		ac[i].clr();
-	}
-	for (int i = 0; i < maxDino; i++) {
 		akl[i].clr();
-	}
-	for (int i = 0; i < maxCar; i++) {
 		ach[i].clr();
-	}
-	for (int i = 0; i < maxCar; i++) {
 		axt[i].clr();
 	}
 }
@@ -217,8 +278,6 @@ void CGAME::updatePosPeople(int z)
 void CGAME::updatePosVehicle() {
 	for (int i = 0; i < maxCar; i++) {
 		ach[i].move();
-	}
-	for (int i = 0; i < maxCar; i++) {
 		axt[i].move();
 	}
 }
@@ -226,8 +285,8 @@ void CGAME::updatePosVehicle() {
 void CGAME::updatePosAnimal() {
 	for (int i = 0; i < maxBird; i++) {
 		ac[i].move();
-	}
-	for (int i = 0; i < maxDino; i++) {
 		akl[i].move();
 	}
 }
+
+

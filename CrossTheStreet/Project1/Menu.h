@@ -9,4 +9,3 @@ enum State { UP, DOWN, LEFT, RIGHT, ENTER, BACK, ESE };
 State key(int z);
 int Menu(str step[], int n);
 void Routes();
-

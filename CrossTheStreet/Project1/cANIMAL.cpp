@@ -3,6 +3,48 @@
 #include "console.h"
 
 mutex mu;
+/*
+ run1Bird(int speed, CBIRD* bird) {
+	for (int i = 0; i < 60; i++) {
+		bird->Draw();
+		Sleep(speed);
+		bird->clr();
+		bird->move();
+	}
+}*/
+
+/*void runMultiBird(CBIRD* bird) {
+	while (1)
+	{
+		for (int i = 0; i < 60; i++) {
+			bird->Draw();
+			Sleep(100);
+			bird->clr();
+			bird->move();
+		}
+		bird++;
+	}
+}
+
+/*void run1Dino(int speed) {
+	CDINOSAUR dino;
+	for (int i = 0; i < 60; i++) {
+		dino.Draw();
+		Sleep(speed);
+		dino.clr();
+		dino.move();
+	}
+}
+
+void runMultiDino() {
+	while (true) {
+		thread run(run1Dino, 200);
+		Sleep(3000);
+		run.detach();
+	}
+}*/
+
+//---------------
 
 void initBird(vector<string>& birdWav)
 {
@@ -32,7 +74,7 @@ void initDino(vector<string>& dinoWav)
 
 void CANIMAL::Draw() { TextColor(14); }
 
-void CANIMAL::Tell(vector<string>&) { }
+//void CANIMAL::Tell(vector<string>&) { }
 
 void CANIMAL::move() { 
 	if (mX < 88) {
@@ -60,7 +102,7 @@ void CBIRD::Draw()
 	mu.unlock();
 }
 
-void CBIRD::Tell(vector<string>& birdWav)
+/*void CBIRD::Tell(vector<string>& birdWav)
 {
 	srand(time(NULL));
 	random = rand() % 4 + 0;
@@ -74,7 +116,7 @@ void CBIRD::Tell(vector<string>& birdWav)
 
 	sound.setBuffer(buffer);
 	sound.play();
-}
+}*/
 
 void CBIRD::move()
 {
@@ -105,7 +147,7 @@ void CDINOSAUR::Draw()
 	mu.unlock();
 }
 
-void CDINOSAUR::Tell(vector<string>& dinoWav)
+/*void CDINOSAUR::Tell(vector<string>& dinoWav)
 {
 	srand(time(NULL));
 	random = rand() % 3 + 0;
@@ -119,7 +161,7 @@ void CDINOSAUR::Tell(vector<string>& dinoWav)
 
 	sound.setBuffer(buffer);
 	sound.play();
-}
+}*/
 
 void CDINOSAUR::move()
 {

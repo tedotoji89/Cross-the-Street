@@ -1,17 +1,9 @@
 #pragma once
 #include <string>
 #include <vector>
-#include <SFML/Audio.hpp>
+//#include <SFML/Audio.hpp>
 #include <time.h>
 #include <vector>
-
-class Point
-{
-private:
-	int X;
-	int Y;
-	friend class CANIMAL;
-};
 
 class CANIMAL
 {
@@ -19,12 +11,9 @@ protected:
 	int mX, mY;
 	int level;
 	int random;
-	//vector <CANIMAL*> a;
 
-	Point topLeft, bottomRight;
-
-	sf::Sound sound;
-	sf::SoundBuffer buffer;
+//	sf::Sound sound;
+//	sf::SoundBuffer buffer;
 
 public:
 	CANIMAL() = default;
@@ -35,7 +24,7 @@ public:
 	void setY(int y) { mY = y; }
 
 	virtual void Draw();
-	virtual void Tell(std::vector<std::string>&);
+//	virtual void Tell(std::vector<std::string>&);
 	virtual void move();
 	virtual void clr();
 };
@@ -46,7 +35,7 @@ public:
 	CBIRD();
 
 	void Draw();
-	void Tell(std::vector<std::string>& birdWav);
+//	void Tell(std::vector<std::string>& birdWav);
 	void move();
 	void clr();
 };
@@ -57,7 +46,7 @@ public:
 	CDINOSAUR();
 
 	void Draw();
-	void Tell(std::vector<std::string>& dinoWav);
+//	void Tell(std::vector<std::string>& dinoWav);
 	void move();
 	void clr();
 };
@@ -65,5 +54,5 @@ public:
 void initBird(std::vector<std::string>& birdWav);
 void initDino(std::vector<std::string>& dinoWav);
 
-void runMultiBird(CBIRD *);
-void runMultiDino();
+//void runMultiBird(CBIRD*);
+//void runMultiDino();

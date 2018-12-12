@@ -41,15 +41,19 @@ int Menu(str step[], int n)
 	{
 		clrscr();
 		
+		mu.lock();
 		TextColor(7);
+		gotoXY(1, 1);
 		cout << "Welcome, Friend!!" << endl << endl;
 
 		//In cac selection ra man hinh
 		for (int i = 0; i < n; i++) 
 		{
 			TextColor(color[i]);
+			gotoXY(1, 2 + i);
 			cout << i + 1 << "> " << step[i] << endl;
 		}
+		mu.unlock();
 
 		//Kiem tra key nhap vao
 		int z = _getch();
@@ -78,14 +82,18 @@ int Menu(str step[], int n)
 	}
 }
 
-void Routes() 
+CGAME cg;
+void Routes()
 {
 	//Dieu huong sau khi chon
 	int selection = Menu(step, 4);
-	switch (selection) 
+
+//	mu.lock();
+	switch (selection)
 	{
 	case 0:
-		controlPeople();
+		cg = *new CGAME();
+		cg.startGame();
 		break;
 	case 1:
 		cout << "You selected option 2" << endl;
@@ -96,4 +104,5 @@ void Routes()
 	default:
 		break;
 	}
+//	mu.unlock();
 }

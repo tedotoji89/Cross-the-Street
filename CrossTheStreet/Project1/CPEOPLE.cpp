@@ -42,7 +42,12 @@ bool CPEOPLE::isImpactVehi(CVEHICLE *obt) {
 	return false;
 }
 
-bool CPEOPLE::isFinish() { return false; }
+bool CPEOPLE::isFinish() 
+{ 
+	if (mY >= 24)
+		return true;
+	return false;
+}
 
 bool CPEOPLE::isDead() { 
 	return (!mState ? true : false); 

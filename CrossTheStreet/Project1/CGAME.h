@@ -11,6 +11,7 @@ const string path = "D:\\Final Project\\Year 2 - Semester 1\\Sound\\";
 
 extern string savePath;
 extern mutex mu;
+
 extern int maxBird;
 extern int maxDino;
 extern int maxCar;
@@ -50,6 +51,8 @@ public:
 	void updatePosPeople(int);
 	void updatePosVehicle();
 	void updatePosAnimal();
+
+//	void runMultiBird(CANIMAL*);
 };
 
 void controlPeople();
