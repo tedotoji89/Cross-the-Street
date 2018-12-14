@@ -4,12 +4,12 @@
 #include "Console.h"
 #include <thread>
 
-CGAME* cg;
+extern CGAME* cg;
 char MOVING;
 
 bool p_run = true;
 bool g_play = true;
-bool light_set = false;
+extern bool light_set;
 
 void subThread()
 {
@@ -27,27 +27,6 @@ void subThread()
 		}
 
 		MOVING = ' ';
-
-		if (!cg->getTLight()->getLight())
-		{
-			if (light_set == false)
-			{
-				light_set = true;
-				cg->getTLight()->eraseLight();
-				cg->getTLight()->drawGreenLight();
-			}
-			cg->updatePosAnimal();
-			cg->updatePosVehicle();
-		}
-		else
-		{
-			if (light_set == true)
-			{
-				light_set = false;
-				cg->getTLight()->eraseLight();
-				cg->getTLight()->drawRedLight();
-			}
-		}
 
 		if (cg->impact()) 
 		{
@@ -70,74 +49,50 @@ int main()
 
 	backgroundMusic(sound, buffer);
 
-	gameName();
-	Sleep(2000);
+//	gameName();
+//	Sleep(2000);
 
 	cg = new CGAME();
+	int temp;
 
-	int selection = Menu(step, 4);
+	cg->startGame();
 
-	switch (selection)
+
+	thread t1(subThread);
+
+	while (g_play)
 	{
-	case 0:
-	{
-		int temp;
+		temp = toupper(_getch());
 
-		cg->startGame();
-
-		thread t1(subThread);
-
-		while (g_play) 
-		{
-			temp = toupper(_getch());
-
-			if (cg->getTLight()->getSec() == cg->getTLight()->getTime())
-			{
-				cg->getTLight()->setSec();
-				cg->getTLight()->reserTimer();
-				cg->getTLight()->setLight();
+		if (!cg->getPeople()->isDead()) {
+			if (temp == 27) {
+				cg->exitGame(t1.native_handle());
+				g_play = false;
 			}
-			else cg->getTLight()->countUp();
-
-			if (!cg->getPeople()->isDead()) {
-				if (temp == 27) {
-					cg->exitGame(t1.native_handle());
-					g_play = false;
-				}
-				else if (temp == 'L') {
-					cg->saveGame(t1.native_handle());
-				}
-				else if (temp == 'P') {
-					cg->pauseGame(t1.native_handle());
-				}
-				else if (temp == 'T') {
-					cg->loadGame(t1.native_handle());
-				}
-				else {
-					cg->resumeGame((HANDLE)t1.native_handle());
-					MOVING = temp;
-				}
+			else if (temp == 'L') {
+				cg->saveGame(t1.native_handle());
+			}
+			else if (temp == 'P') {
+				cg->pauseGame(t1.native_handle());
+			}
+			else if (temp == 'T') {
+				cg->loadGame(t1.native_handle());
 			}
 			else {
-				if (temp == 'Y') cg->startGame();
-				else {
-					cg->exitGame(t1.native_handle());
-					g_play = false;
-					delete cg;
-				}
+				cg->resumeGame((HANDLE)t1.native_handle());
+				MOVING = temp;
 			}
 		}
-		t1.join();
-	} break;
-	case 1:
-
-		break;
-	case 2:
-		delete cg;
-		break;
-	default:
-		break;
+		else {
+			if (temp == 'Y') cg->startGame();
+			else {
+				cg->exitGame(t1.native_handle());
+				g_play = false;
+				delete cg;
+			}
+		}
 	}
+	t1.join();
 
 	return 0;
 }

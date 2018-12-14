@@ -231,8 +231,50 @@ CGAME::~CGAME()
 
 //-------------------
 
+CGAME* cg;
+bool light_set = false;
+static bool level_up;
+void trafficThread()
+{
+	while (g_play && !level_up)
+	{
+		if (cg->getTLight()->getSec() == cg->getTLight()->getTime())
+		{
+			cg->getTLight()->setSec();
+			cg->getTLight()->resetTimer();
+			cg->getTLight()->setLight();
+		}
+		else cg->getTLight()->countUp();
+
+		if (!cg->getTLight()->getLight())
+		{
+			if (light_set == false)
+			{
+				light_set = true;
+				cg->getTLight()->eraseLight();
+				cg->getTLight()->drawGreenLight();
+			}
+			cg->updatePosAnimal();
+			cg->updatePosVehicle();
+		}
+		else
+		{
+			if (light_set == true)
+			{
+				light_set = false;
+				cg->getTLight()->eraseLight();
+				cg->getTLight()->drawRedLight();
+			}
+		}
+
+		Sleep(100 / cg->getSpeed());
+	}
+}
+
 void CGAME::drawGame()
 {
+	level_up = false;
+
 	clrscr();
 
 	cn = new CPEOPLE();
@@ -248,6 +290,9 @@ void CGAME::drawGame()
 	drawLevel();
 
 	cl->drawGreenLight();
+
+	thread t2(trafficThread);
+	t2.detach();
 }
 
 void CGAME::drawNum()
@@ -517,6 +562,7 @@ void CGAME::updatePosPeople(int z)
 	if (cn->isFinish()) 
 	{
 		gotoXY(x, y); cout << " ";
+		level_up = true;
 		updateLevel();
 	}
 }
