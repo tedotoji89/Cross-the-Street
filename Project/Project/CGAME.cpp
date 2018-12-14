@@ -186,14 +186,15 @@ void gameName()
 
 CGAME::CGAME()
 {
-	level[1] = new Level(2, 2, 2, 2, 4, 1);
-	level[2] = new Level(3, 3, 3, 3, 5, 2);
-	level[3] = new Level(4, 4, 4, 4, 5, 3);
-	level[4] = new Level(5, 5, 5, 5, 5, 4);
-	level[5] = new Level(6, 6, 6, 6, 6, 5);
-	level[6] = new Level(7, 7, 7, 7, 7, 6);
-	level[7] = new Level(8, 8, 8, 8, 7, 7);
-	level[8] = new Level(9, 9, 9, 9, 7, 8);
+	level[0] = new Level(3, 3, 3, 3, 4, 1);
+	level[1] = new Level(3, 3, 3, 3, 4, 1);
+	level[2] = new Level(4, 4, 4, 4, 5, 2);
+	level[3] = new Level(5, 5, 5, 5, 5, 3);
+	level[4] = new Level(6, 6, 6, 6, 6, 4);
+	level[5] = new Level(7, 7, 7, 7, 6, 5);
+	level[6] = new Level(8, 8, 8, 8, 7, 6);
+	level[7] = new Level(9, 9, 9, 9, 7, 7);
+	level[8] = new Level(10, 10, 10, 10, 7, 8);
 
 	curLevel = 1;
 
@@ -408,17 +409,16 @@ int CGAME::currentLevel()
 void CGAME::updateLevel()
 {
 	for (int i = 0; i < level[curLevel]->getBird(); ++i)
-		if (ac[i] != NULL) delete ac[i];
+		if (ac[i] != NULL) ac[i] = NULL;
 
 	for (int i = 0; i < level[curLevel]->getDino(); ++i)
-		if (akl[i] != NULL) delete akl[i];
+		if (akl[i] != NULL) akl[i] = NULL;
 
 	for (int i = 0; i < level[curLevel]->getTruck(); ++i)
-		if (axt[i] != NULL) delete axt[i];
+		if (axt[i] != NULL) axt[i] = NULL;
 
 	for (int i = 0; i < level[curLevel]->getCar(); ++i)
-		if (ach[i] != NULL) delete ach[i];
-
+		if (ach[i] != NULL) ach[i] = NULL;
 	delete cn;
 	delete cl;
 
@@ -456,12 +456,22 @@ void CGAME::setDead() {
 	cn->setState(false);
 }
 
-void CGAME::resetGame(void*) {
-	return;
+void CGAME::resetGame() {
+	level[0] = new Level(3, 3, 3, 3, 4, 1);
+	level[1] = new Level(3, 3, 3, 3, 4, 1);
+	level[2] = new Level(4, 4, 4, 4, 5, 2);
+	level[3] = new Level(5, 5, 5, 5, 5, 3);
+	level[4] = new Level(6, 6, 6, 6, 6, 4);
+	level[5] = new Level(7, 7, 7, 7, 6, 5);
+	level[6] = new Level(8, 8, 8, 8, 7, 6);
+	level[7] = new Level(9, 9, 9, 9, 7, 7);
+	level[8] = new Level(10, 10, 10, 10, 7, 8);
+
+	curLevel = 1;
 }
 
-void CGAME::exitGame(void*) {
-	//
+void CGAME::exitGame(void* a) {
+	return;
 }
 
 //-------------------
@@ -476,9 +486,12 @@ void CGAME::saveGame(void*)
 	cout << "Enter your saving path:\n";
 	gotoXY(m_start + 3, 20);
 	getline(cin, savePath);
+	gotoXY(m_start + 3, 20);
+	cout << "                ";
 
 	ofstream fout;
-	fout.open(savePath);
+	fout.open(savePath, ios::binary);
+	fout << this->curLevel;
 	fout.close();
 
 	fstream save;
@@ -489,18 +502,25 @@ void CGAME::saveGame(void*)
 string loadPath;
 void CGAME::loadGame(void*)
 {
+	string savedLevel;
 	mu.lock();
 	gotoXY(m_start + 3, 19);
-	cout << "Enter your saving path:\n";
+	cout << "Enter your loading path:\n";
 	gotoXY(m_start + 3, 20);
 	getline(cin, loadPath);
+	cout << "               ";
 	mu.unlock();
 
-	ofstream fout;
-	fout.open(loadPath);
+	ifstream fin;
+	fin.open(loadPath, ios::binary);
+	getline(fin, savedLevel);
+	
+	resetGame();
+	curLevel = stoi(savedLevel) - 1;
+	updateLevel();
 
+	fin.close();
 	fstream save;
-
 }
 
 //-------------------

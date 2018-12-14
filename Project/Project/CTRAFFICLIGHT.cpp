@@ -68,7 +68,7 @@ void CTRAFFICLIGHT::countUp()
 {
 	++timer;
 }
-void CTRAFFICLIGHT::reserTimer()
+void CTRAFFICLIGHT::resetTimer()
 {
 	timer = 0;
 }

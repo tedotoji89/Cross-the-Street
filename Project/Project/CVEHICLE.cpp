@@ -49,7 +49,9 @@ void CVEHICLE::Move()
 		mu.unlock();
 	}
 	mX += direction;
-	Draw(mX, mY);
+	if (mX > 0 && mY > 0) {
+		Draw(mX, mY);
+	}
 }
 
 bool CVEHICLE::IsEndOfLane()

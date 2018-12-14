@@ -12,7 +12,8 @@
 #include <ctime>
 using namespace std;
 
-const string path = "D:\\Final Project\\Year 2 - Semester 1\\Sound\\";
+//const string path = "D:\\Final Project\\Year 2 - Semester 1\\Sound\\";
+const string path = "C:\\Users\\tedot\\Desktop\\Cross-the-Street\\Sound\\";
 
 extern string savePath;
 extern string loadPath;
@@ -97,13 +98,11 @@ public:
 
 	void pauseGame(void*);
 	void resumeGame(void*);
-	void resetGame(void*);
+	void resetGame();
 	void exitGame(void*);
 
 	void loadGame(void*);
 	void saveGame(void*);
-
-	void clrScr();
 
 	void updatePosPeople(int);
 	void updatePosVehicle();
